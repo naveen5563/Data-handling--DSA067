@@ -1,0 +1,17 @@
+# Create dataframe
+data <- data.frame(
+  Year = c(2019, 2020, 2022, 2023, 2024),
+  Job_Sector = c("IT", "Government Job", "Customer care", "Bank", "Games"),
+  Job_Seekers_Rate = c(95, 97, 98, 82, 74),
+  Selection_Rate = c(25, 12, 45, 20, 35)
+)
+
+# Pie plot
+pie(data$Job_Seekers_Rate, labels = paste(data$Job_Sector, data$Year), main = "Job Seekers Rate by Job Sector")
+
+# Mosaic plot
+mosaicplot(data$Job_Seekers_Rate ~ data$Year, main = "Job Seekers Rate by Year")
+
+# Funnel plot
+library(funnelR)
+funnel(data$Selection_Rate, data$Job_Sector, reverse = TRUE)
