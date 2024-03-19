@@ -1,0 +1,47 @@
+# Load required libraries
+library(ggplot2)
+
+# Customer feedback data
+feedback_data <- data.frame(
+  Satisfaction_Level = c("Very Satisfied", "Satisfied", "Neutral", "Unsatisfied", "Very Unsatisfied"),
+  Number_of_Responses = c(150, 200, 50, 30, 10)
+)
+
+# Calculate percentage of responses for each satisfaction level
+feedback_data$Percentage <- feedback_data$Number_of_Responses / sum(feedback_data$Number_of_Responses) * 100
+
+# Pie chart
+pie_chart <- ggplot(feedback_data, aes(x = "", y = Percentage, fill = Satisfaction_Level)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
+  labs(title = "Customer Satisfaction Levels (Pie Chart)",
+       fill = "Satisfaction Level",
+       y = "Percentage") +
+  theme_void()
+
+# Donut chart
+donut_chart <- pie_chart +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "right",
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 10)
+  ) +
+  geom_text(aes(label = paste0(round(Percentage), "%")), position = position_stack(vjust = 0.5))
+
+# Bar chart
+bar_chart <- ggplot(feedback_data, aes(x = Satisfaction_Level, y = Number_of_Responses, fill = Satisfaction_Level)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Customer Satisfaction Levels (Bar Chart)",
+       x = "Satisfaction Level",
+       y = "Number of Responses",
+       fill = "Satisfaction Level") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Print all three charts
+print(pie_chart)
+print(donut_chart)
+print(bar_chart)
